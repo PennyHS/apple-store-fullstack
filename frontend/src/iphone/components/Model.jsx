@@ -3,6 +3,7 @@ import gsap from "gsap";
 import ModelView from "./ModelView";
 import { useEffect, useRef, useState } from "react";
 import { yellowImg } from "../utils";
+import { getProduct, formatPrice } from "../../api";
 
 import * as THREE from 'three';
 import { Canvas } from "@react-three/fiber";
@@ -29,6 +30,24 @@ const Model = () => {
   // rotation
   const [smallRotation, setSmallRotation] = useState(0);
   const [largeRotation, setLargeRotation] = useState(0);
+
+    // product data from the API (price, stock, sku)
+  const [product, setProduct] = useState(null);
+  const [loadError, setLoadError] = useState(null);
+
+  useEffect(() => {
+    getProduct("iphone-15-pro")
+      .then(setProduct)
+      .catch((err) => setLoadError(err.message));
+  }, []);
+
+  // find the variant that matches the selected colour + size
+  const sizeLabel = sizes.find((s) => s.value === size)?.label;
+  const variant = product?.variants.find(
+    (v) =>
+      v.colorHex.toLowerCase() === model.color[0].toLowerCase() &&
+      v.size === sizeLabel
+  );
 
   const tl = gsap.timeline();
 
@@ -98,7 +117,16 @@ const Model = () => {
           </div>
 
           <div className="mx-auto w-full">
-            <p className="text-sm font-light text-center mb-5">{model.title}</p>
+            <p className="text-sm font-light text-center mb-1">{model.title}</p>
+<p className="text-center mb-5 text-lg font-semibold">
+  {loadError
+    ? <span className="text-red-400">Couldn't load price</span>
+    : !variant
+      ? <span className="text-gray">Loading price…</span>
+      : variant.inStock
+        ? formatPrice(variant.priceCents)
+        : <span className="text-gray">Sold out</span>}
+</p>
 
             <div className="flex-center">
               <ul className="color-container">
