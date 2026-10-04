@@ -5,10 +5,10 @@ import IphonePage from "./pages/IphonePage.jsx";
 const App = () => (
     <BrowserRouter>
         <Routes>
-            <Route path="/" element={<Navigate to="/macbook" replace />} />
+            <Route path="/" element={<Navigate to="/iphone" replace />} />
             <Route path="/macbook" element={<MacbookPage />} />
             <Route path="/iphone" element={<IphonePage />} />
-            <Route path="*" element={<Navigate to="/macbook" replace />} />
+            <Route path="*" element={<Navigate to="/iphone" replace />} />
         </Routes>
     </BrowserRouter>
 )

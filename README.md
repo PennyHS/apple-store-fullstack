@@ -6,7 +6,7 @@ A routed Apple-style storefront: 3D MacBook and iPhone product pages, backed by 
 
 | Folder | What's in it |
 |---|---|
-| `frontend/` | React 19 + Vite + Tailwind 4 + GSAP + React Three Fiber. Routes: `/macbook`, `/iphone` |
+| `frontend/` | React 19 + Vite + Tailwind 4 + GSAP + React Three Fiber. Routes: `/iphone` (home), `/macbook` |
 | `backend/` | Node/Express API — products, cart, orders, payments + webhooks *(to do)* |
 | `database/` | SQL schema and seed data *(to do)* |
 | `originals/` | The two original tutorial projects, kept untouched for reference |
