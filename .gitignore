@@ -1,0 +1,17 @@
+# Dependencies & builds
+node_modules/
+dist/
+build/
+coverage/
+
+# Secrets — Stripe/PayPal keys, DB passwords, cloud creds
+.env
+.env.*
+!.env.example
+
+# Logs & OS/editor junk
+*.log
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+.idea/
