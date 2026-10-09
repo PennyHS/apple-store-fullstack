@@ -10,6 +10,7 @@ import { Canvas } from "@react-three/fiber";
 import { View } from "@react-three/drei";
 import { models, sizes } from "../constants";
 import { animateWithGsapTimeline } from "../utils/animations";
+import { useCartStore } from "../../store/cartStore";
 
 const Model = () => {
   const [size, setSize] = useState('small');
@@ -49,6 +50,23 @@ const Model = () => {
       v.size === sizeLabel
   );
 
+    const addItem = useCartStore((s) => s.addItem);
+  const [added, setAdded] = useState(false);
+
+  const handleAddToBag = () => {
+    addItem({
+      variantId: variant.id,
+      sku: variant.sku,
+      name: product.name,
+      colorName: variant.colorName,
+      size: variant.size,
+      priceCents: variant.priceCents,
+    });
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1500);
+  };
+
+
   const tl = gsap.timeline();
 
   useEffect(() => {
@@ -72,7 +90,7 @@ const Model = () => {
   }, []);
 
   return (
-    <section className="common-padding">
+    <section id="buy" className="common-padding scroll-mt-10">
       <div className="screen-max-width">
         <h1 id="heading" className="section-heading">
           Take a closer look.
@@ -127,6 +145,16 @@ const Model = () => {
         ? formatPrice(variant.priceCents)
         : <span className="text-gray">Sold out</span>}
 </p>
+
+<div className="flex-center">
+  <button
+    className="btn disabled:opacity-40 disabled:cursor-not-allowed"
+    disabled={!variant || !variant.inStock}
+    onClick={handleAddToBag}
+  >
+    {added ? "Added ✓" : "Add to Bag"}
+  </button>
+</div>
 
             <div className="flex-center">
               <ul className="color-container">

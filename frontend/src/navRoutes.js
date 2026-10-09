@@ -2,4 +2,5 @@
 export const navRoutes = {
     Mac: "/macbook",
     iPhone: "/iphone",
+    Support: "/orders/lookup",
 };

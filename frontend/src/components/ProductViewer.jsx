@@ -3,6 +3,9 @@ import clsx from "clsx";
 import {Canvas} from "@react-three/fiber";
 import {Box, OrbitControls} from "@react-three/drei";
 import MacbookModel14 from "./models/Macbook-14.jsx";
+import { useEffect, useState } from "react";
+import { getProduct, formatPrice } from "../api";
+import { useCartStore } from "../store/cartStore";
 
 import StudioLights from "./three/StudioLights.jsx";
 import ModelSwitcher from './three/ModelSwitcher.jsx'
@@ -13,12 +16,63 @@ const ProductViewer = () => {
 
     const isMobile = useMediaQuery({ query: '(max-width: 1024px)'});
 
+        // product data from the API
+    const [product, setProduct] = useState(null);
+    const [loadError, setLoadError] = useState(null);
+
+    useEffect(() => {
+        getProduct("macbook-pro")
+            .then(setProduct)
+            .catch((err) => setLoadError(err.message));
+    }, []);
+
+    // the 3D model uses scale for size: 0.06 = 14", 0.08 = 16"
+    const sizeLabel = scale === 0.06 ? '14"' : '16"';
+    const variant = product?.variants.find(
+        (v) => v.colorHex.toLowerCase() === color.toLowerCase() && v.size === sizeLabel
+    );
+
+    const addItem = useCartStore((s) => s.addItem);
+    const [added, setAdded] = useState(false);
+
+    const handleAddToBag = () => {
+        addItem({
+            variantId: variant.id,
+            sku: variant.sku,
+            name: product.name,
+            colorName: variant.colorName,
+            size: variant.size,
+            priceCents: variant.priceCents,
+        });
+        setAdded(true);
+        setTimeout(() => setAdded(false), 1500);
+    };
+
     return (
         <section id="product-viewer">
             <h2>Take a closer look.</h2>
 
             <div className="controls">
                 {/*<p className="info">Macbook Pro | Available in 14" & 16" in Space Gray & Dark colors</p>*/}
+
+                <div className="col-center gap-3">
+    <p className="text-white text-lg font-semibold">
+        {loadError
+            ? "Couldn't load price"
+            : !variant
+                ? "Loading price…"
+                : variant.inStock
+                    ? formatPrice(variant.priceCents)
+                    : "Sold out"}
+    </p>
+    <button
+        onClick={handleAddToBag}
+        disabled={!variant || !variant.inStock}
+        className="bg-primary text-white px-6 py-2 rounded-full font-semibold cursor-pointer hover:bg-white hover:text-black transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed"
+    >
+        {added ? "Added ✓" : "Add to Bag"}
+    </button>
+</div>
 
                 <div className="flex-center gap-5 mt-5">
                     <div className="color-control">

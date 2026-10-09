@@ -16,7 +16,13 @@ const Hero = () => {
 
             <video ref={videoRef} src="/videos/hero.mp4" autoPlay muted playsInline />
 
-            <button>Buy</button>
+            <button
+    onClick={() =>
+        document.getElementById("product-viewer")?.scrollIntoView({ behavior: "smooth" })
+    }
+>
+    Buy
+</button>
 
             <p>From $1599 or $133/mo for 12 months</p>
         </section>
