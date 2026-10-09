@@ -305,8 +305,8 @@ body {
     }
   }
 
-  #highlights {
-    @apply container mx-auto lg:py-40 max-lg:px-5;
+#highlights {
+    @apply container mx-auto lg:pt-40 lg:pb-16 max-lg:px-5;
 
     h2 {
       @apply text-white font-semibold text-3xl lg:text-7xl text-center max-w-3xl mx-auto;

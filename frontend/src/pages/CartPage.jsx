@@ -70,14 +70,19 @@ const CartPage = () => {
                             ))}
                         </ul>
 
+                        {/* Demo notice: no real payments */}
+                        <p className="mt-8 text-center text-sm text-yellow-400 border border-yellow-400/40 rounded-lg px-4 py-2">
+                            Demo store: payments use Stripe test mode. Use card 4242 4242 4242 4242. No real charges.
+                        </p>
+
                         <div className="flex flex-col items-end mt-8 gap-1">
                             <p className="text-gray">Subtotal</p>
                             <p className="text-3xl font-semibold">{formatPrice(subtotal)}</p>
                             <p className="text-gray text-sm">Final price is confirmed at checkout.</p>
-{checkoutError && <p className="text-red-400">{checkoutError}</p>}
-<button className="btn disabled:opacity-40" disabled={checkingOut} onClick={handleCheckout}>
-    {checkingOut ? "Redirecting…" : "Check out"}
-</button>
+                            {checkoutError && <p className="text-red-400">{checkoutError}</p>}
+                            <button className="btn disabled:opacity-40" disabled={checkingOut} onClick={handleCheckout}>
+                                {checkingOut ? "Redirecting…" : "Check out"}
+                            </button>
                         </div>
                     </>
                 )}
