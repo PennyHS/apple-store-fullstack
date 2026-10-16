@@ -5,6 +5,7 @@ import productsRouter from "./routes/products.routes.js";
 import checkoutRouter from "./routes/checkout.routes.js";
 import { stripeWebhook } from "./controllers/checkout.controller.js";
 import ordersRouter from "./routes/orders.routes.js";
+import { pool } from "./db.js";
 
 
 const app = express();
@@ -18,6 +19,16 @@ app.get("/api/health", (req, res) => res.json({ ok: true }));
 app.use("/api/products", productsRouter);
 app.use("/api/checkout", checkoutRouter);
 app.use("/api/orders", ordersRouter);
+app.get("/api/health/db", async (req, res, next) => {
+    try {
+        const { rows } = await pool.query(
+            "SELECT current_database() AS database, inet_server_addr() AS server, version()"
+        );
+        res.json(rows[0]);
+    } catch (err) {
+        next(err);
+    }
+});
 
 // Basic error handler: logs the real error, hides details from the client
 app.use((err, req, res, next) => {
