@@ -2,13 +2,14 @@ import { Link } from "react-router-dom";
 import {navLinks} from "../constants";
 import { navRoutes } from "../navRoutes.js";
 import { useCartStore, selectCount } from "../store/cartStore";
+import MobileMenu from "./MobileMenu";
 
 const NavBar = () => {
  const count = useCartStore(selectCount);
     return (
         <header>
             <nav>
-                <img  src="/logo.svg" alt="Apple logo" />
+                <Link to="/iphone"><img src="/ph-logo.svg" alt="PH Demo Store" width={22} height={22} /></Link>
 
                 <ul>
                     {navLinks.map(({ label }) => (
@@ -30,6 +31,7 @@ const NavBar = () => {
         </span>
     )}
 </Link>
+<MobileMenu />
                 </div>
             </nav>
         </header>

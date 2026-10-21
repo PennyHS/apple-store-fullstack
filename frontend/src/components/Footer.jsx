@@ -21,7 +21,7 @@ const Footer = () => {
                         tutorials. Backend, database, payments and integration built by Penny Hsiao.
                     </p>
                 </div>
-                <img src="/logo.svg" alt="Logo" />
+                <img src="/ph-logo.svg" alt="PH Demo Store" width={22} height={22} />
             </div>
 
             <hr />
