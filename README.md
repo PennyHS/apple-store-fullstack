@@ -7,7 +7,10 @@ A deployed e-commerce demo with a React storefront, an Express REST API, a Postg
 
 > Portfolio project by Penny Hsiao. Not affiliated with or endorsed by Apple Inc. Product names and images belong to their respective owners. Nothing is for sale: payments run in Stripe test mode only.
 
-![Home page](docs/screenshots/home.png)
+<p>
+  <img src="docs/screenshots/home1.png" width="49%" />
+  <img src="docs/screenshots/home2.png" width="49%" />
+</p>
 
 ## Try it
 
